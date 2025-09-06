@@ -16,26 +16,20 @@ def pedir_cosecha() -> int:
     
     return cosecha
 
-def calcular_jugo_y_total(cant_cosechadas: int) -> tuple[int]: # Calcula ambas cosas en la misma función ya que los valores de peso random sólo se pueden evaluar acá
+def calcular_jugo(lista_gramos: int) -> int:
     """
-    Calcula cuántas naranjas se procesan como jugo de acuerdo a su peso y el total en gramos de la cosecha
+    Calcula cuántas naranjas se procesan como jugo de acuerdo a su peso
 
-    Pre: La cantidad de naranjas cosechadas debe ser un entero mayor a 0
-    Post: Retorna dos enteros, correspondientes a la cantidad de naranjas que se procesan para jugo y el peso total de naranjas en gramos
+    Pre: Recibe como parámetro la lista con los pesos en gramos de cada naranja.
+    Post: Retorna un entero correspondiente a la cantidad de naranjas que deben ser procesadas como jugo.
     """
     cant_jugo = 0
-    total_gramos = 0
 
-    for i in range(cant_cosechadas):
-        peso_unidad = rnd.randint(150, 350)
-        total_gramos += peso_unidad
-
+    for peso_unidad in lista_gramos:
         if peso_unidad < 200 or peso_unidad > 300: # Si no se encuentra en el rango de peso se procesa como jugo, pero interpreto que sigue incluyéndose en los cajones
             cant_jugo += 1
-        
-        total_gramos += peso_unidad
     
-    return cant_jugo, total_gramos
+    return cant_jugo
 
 def calcular_cajas(cant_naranjas: int) -> int:
     """
@@ -47,7 +41,7 @@ def calcular_cajas(cant_naranjas: int) -> int:
     max_naranjas_x_cajon = 100
 
     cant_cajas, sobrante_cajas = divmod(cant_naranjas, max_naranjas_x_cajon)
-    if sobrante_cajas:
+    if sobrante_cajas: # Redondea para arriba
         cant_cajas += 1
 
     return cant_cajas
@@ -71,8 +65,10 @@ def calcular_camiones(total_gramos: int) -> tuple[int]:
 
 def main():
     total_cosecha = pedir_cosecha()
+    lista_gramos = [rnd.randint(150, 350) for i in range(total_cosecha)]
+    total_gramos = sum(lista_gramos)
 
-    cant_jugo, total_gramos = calcular_jugo_y_total(total_cosecha)
+    cant_jugo = calcular_jugo(lista_gramos)
     cant_cajas = calcular_cajas(total_cosecha)
     cant_camiones, sobrante_camion = calcular_camiones(total_gramos)
 
