@@ -1,3 +1,4 @@
+from typing import List
 import random as rnd
 
 def pedir_cosecha() -> int:
@@ -15,6 +16,15 @@ def pedir_cosecha() -> int:
             print("ERROR - Cantidad inválida")
     
     return cosecha
+
+def generar_pesos(naranjas_cosechadas: int) -> List[int]:
+    """
+    Genera una lista de pesos aleatorios entre 150 y 350, cuya cantidad de elementos es definida por la cantidad de naranjas cosechadas.
+
+    Pre: Ingresa como parámetros la cantidad de naranjas cosechadas, que debe ser un entero positivo.
+    Post: Retorna la lista de enteros con los pesos en gramos correspondientes a cada naranja.
+    """
+    return [rnd.randint(150, 350) for i in range(naranjas_cosechadas)]
 
 def calcular_jugo(lista_gramos: int) -> int:
     """
@@ -65,7 +75,7 @@ def calcular_camiones(total_gramos: int) -> tuple[int]:
 
 def main():
     total_cosecha = pedir_cosecha()
-    lista_gramos = [rnd.randint(150, 350) for i in range(total_cosecha)]
+    lista_gramos = generar_pesos(total_cosecha)
     total_gramos = sum(lista_gramos)
 
     cant_jugo = calcular_jugo(lista_gramos)
