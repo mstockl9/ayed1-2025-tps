@@ -13,8 +13,6 @@ def uno_al_cienmil() -> None:
             op = input("¿Desea interrumpir la generación de números? (1- Si, 0 u otra cosa- No): ")
             if op == "1":
                 break
-            else:
-                continue
 
 def main():
     input("A continuación se imprimen todos los números del 1 al 100.000, si quiere detener el proceso presione Ctrl-C (Presione Enter)")
