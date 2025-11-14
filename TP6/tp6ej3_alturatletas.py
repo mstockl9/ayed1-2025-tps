@@ -30,7 +30,7 @@ def pedir_altura(num: int) -> float:
         except ValueError:
             print("ERROR - La altura debe ser un número.")
         else:
-            if altura > 0 or altura == -1.0:
+            if (altura > 0 and altura < 2.5) or altura == -1.0:
                 return altura
             else:
                 print("ERROR - La altura debe ser mayor a 0.")

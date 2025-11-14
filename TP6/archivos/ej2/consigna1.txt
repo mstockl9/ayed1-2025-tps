@@ -1,0 +1,3 @@
+﻿Escribir un programa que permita dividir un archivo de texto cualquiera en partes 
+que se puedan enviar por correo electrónico. El tamaño máximo de las partes se 
+ingresa por teclado. Los nombres de 
