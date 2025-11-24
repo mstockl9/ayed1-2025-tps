@@ -1,5 +1,23 @@
 import random as rnd
 
+def guardar_dato(dato: str, ruta: str) -> None:
+    """
+    Añade el dato recibido en la ruta de archivo que ingresa.
+
+    Pre: Recibe como parámetros, el dato a guardar y un string correspondiente a la ruta del archivo.
+    Post: No retorna nada, añade el dato al archivo correspondiente.
+    """
+    try:
+        with open(ruta, "at", encoding="utf-8") as archivo_mandar:
+            archivo_mandar.write(dato)
+    
+    except FileNotFoundError as msg:
+        print(f'No se encuentra el archivo: {msg}')
+    except OSError as msg:
+        print(f'No se puede grabar el archivo: {msg}')
+    except Exception as msg:
+        print(f'Error en los datos: {msg}')
+
 def es_bisiesto(anio: int) -> bool:
     """
     Calcula si el año ingresado es bisiesto o no
@@ -109,23 +127,6 @@ def validar_dni(dni: str, ruta_hotel: str) -> bool:
     except Exception as msg:
         print(f'Error en los datos: {msg}')
 
-def guardar_dato(dato: str, ruta: str) -> None:
-    """
-    Añade el dato recibido en la ruta de archivo que ingresa.
-
-    Pre: Recibe como parámetros, el dato a guardar y un string correspondiente a la ruta del archivo.
-    Post: No retorna nada, añade el dato al archivo correspondiente.
-    """
-    try:
-        with open(ruta, "at", encoding="utf-8") as archivo_mandar:
-            archivo_mandar.write(dato)
-    
-    except FileNotFoundError as msg:
-        print(f'No se encuentra el archivo: {msg}')
-    except OSError as msg:
-        print(f'No se puede grabar el archivo: {msg}')
-    except Exception as msg:
-        print(f'Error en los datos: {msg}')
 
 def validar_piso_habitacion(ruta_hotel: str, piso: int, habitacion: int) -> bool:
     """
@@ -258,6 +259,43 @@ def registrar_ingreso(ruta_hotel: str) -> str:
             nro_huesped += 1
             print()
 
+def inicializar_archivo(ruta_hotel: str) -> None:
+    """
+    Crea el archivo vacío en caso de no existir.
+
+    Pre: Recibe como parámetros un string correspondiente a la ruta del archivo de huéspedes.
+    Post: No retorna nada, crea el archivo si no existe.
+    """
+    try:
+        archivo_hotel = open(ruta_hotel, "at")
+        archivo_hotel.close()
+    except FileNotFoundError as msg:
+        print(f'No se encuentra el archivo: {msg}')
+    except OSError as msg:
+        print(f'No se puede grabar el archivo: {msg}')
+    except Exception as msg:
+        print(f'Error en los datos: {msg}')
+
+
+def validar_hay_datos(ruta_hotel: str) -> bool:
+    """
+    Comprueba si hay algún dato en el archivo de huéspedes.
+
+    Pre: Recibe como parámetros un string correspondiente a la ruta del archivo de huéspedes.
+    Post: Retorna True si hay datos, False si no.
+    """
+    try:
+        with open(ruta_hotel, "rt", encoding="utf-8-sig") as archivo_hotel:
+            linea = archivo_hotel.readline()
+            return bool(linea)
+                    
+    except FileNotFoundError as msg:
+        print(f'No se encuentra el archivo: {msg}')
+    except OSError as msg:
+        print(f'No se puede leer el archivo: {msg}')
+    except Exception as msg:
+        print(f'Error en los datos: {msg}')
+
 def opciones(tupla_opciones: tuple[str]) -> None:
     """
     Muestra y enumera el listado de las opciones disponibles.
@@ -282,28 +320,32 @@ def menu():
         )
     
     while True:
+        hay_datos = validar_hay_datos(ruta_hotel)
         opciones(opciones_hotel)
         op = input("Ingrese una de las opciones disponibles: ")
 
         print()
         if op == "1":
             registrar_ingreso(ruta_hotel)
-        elif op == "2":
-            pass
-        elif op == "3":
-            pass
-        elif op == "4":
-            pass
-        elif op == "5":
-            pass
-        elif op == "6":
-            pass
-        elif op == "0":
-            print("El programa ha finalizado.")
-            break
+        elif op != "1" and hay_datos:
+            if op == "2":
+                pass
+            elif op == "3":
+                pass
+            elif op == "4":
+                pass
+            elif op == "5":
+                pass
+            elif op == "6":
+                pass
+            elif op == "0":
+                print("El programa ha finalizado.")
+                break
+            else:
+                print("ERROR - Opción inválida")
+                input("Presione Enter para continuar...")
         else:
-            print("ERROR - Opción inválida")
-            input("Presione Enter para continuar...")
+            print("ERROR - No hay datos cargados aún.")
         print()
         
 menu()
