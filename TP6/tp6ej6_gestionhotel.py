@@ -308,46 +308,6 @@ def registrar_ingreso(ruta_hotel: str, ruta_pisos: str) -> str:
             print()
 
 
-def inicializar_archivo(ruta_hotel: str, ruta_pisos: str) -> None:
-    """
-    Crea los archivos vacío en caso de no existir.
-
-    Pre: Recibe como parámetros dos strings correspondientes a la ruta del archivo de huéspedes y de pisos.
-    Post: No retorna nada, crea los archivos si no existe.
-    """
-    try:
-        archivo_hotel = open(ruta_hotel, "at")
-        archivo_pisos = open(ruta_pisos, "at")
-        archivo_hotel.close()
-        archivo_pisos.close()
-    except FileNotFoundError as msg:
-        print(f'No se encuentra el archivo: {msg}')
-    except OSError as msg:
-        print(f'No se puede grabar el archivo: {msg}')
-    except Exception as msg:
-        print(f'Error en los datos: {msg}')
-
-
-def validar_hay_datos(ruta_hotel: str) -> bool:
-    """
-    Comprueba si hay algún dato en el archivo de huéspedes.
-
-    Pre: Recibe como parámetros un string correspondiente a la ruta del archivo de huéspedes.
-    Post: Retorna True si hay datos, False si no.
-    """
-    try:
-        with open(ruta_hotel, "rt", encoding="utf-8-sig") as archivo_hotel:
-            linea = archivo_hotel.readline()
-            return bool(linea)
-                    
-    except FileNotFoundError as msg:
-        print(f'No se encuentra el archivo: {msg}')
-    except OSError as msg:
-        print(f'No se puede leer el archivo: {msg}')
-    except Exception as msg:
-        print(f'Error en los datos: {msg}')
-
-
 def calcular_mayor_habitaciones(ruta_pisos: str) -> None:
     """
     Muestra el piso con mayor cantidad de habitaciones ocupadas.
@@ -539,6 +499,46 @@ def ordenar_dias_alojamiento(ruta_hotel: str) -> None:
         print(f'Error en los datos: {msg}')
 
 
+def inicializar_archivo(ruta_hotel: str, ruta_pisos: str) -> None:
+    """
+    Crea los archivos vacío en caso de no existir.
+
+    Pre: Recibe como parámetros dos strings correspondientes a la ruta del archivo de huéspedes y de pisos.
+    Post: No retorna nada, crea los archivos si no existe.
+    """
+    try:
+        archivo_hotel = open(ruta_hotel, "at")
+        archivo_pisos = open(ruta_pisos, "at")
+        archivo_hotel.close()
+        archivo_pisos.close()
+    except FileNotFoundError as msg:
+        print(f'No se encuentra el archivo: {msg}')
+    except OSError as msg:
+        print(f'No se puede grabar el archivo: {msg}')
+    except Exception as msg:
+        print(f'Error en los datos: {msg}')
+
+
+def validar_hay_datos(ruta_hotel: str) -> bool:
+    """
+    Comprueba si hay algún dato en el archivo de huéspedes.
+
+    Pre: Recibe como parámetros un string correspondiente a la ruta del archivo de huéspedes.
+    Post: Retorna True si hay datos, False si no.
+    """
+    try:
+        with open(ruta_hotel, "rt", encoding="utf-8-sig") as archivo_hotel:
+            linea = archivo_hotel.readline()
+            return bool(linea)
+                    
+    except FileNotFoundError as msg:
+        print(f'No se encuentra el archivo: {msg}')
+    except OSError as msg:
+        print(f'No se puede leer el archivo: {msg}')
+    except Exception as msg:
+        print(f'Error en los datos: {msg}')
+
+
 def opciones(tupla_opciones: tuple[str]) -> None:
     """
     Muestra y enumera el listado de las opciones disponibles.
@@ -554,6 +554,8 @@ def opciones(tupla_opciones: tuple[str]) -> None:
 def menu():
     ruta_hotel = "AyED1-2025-TPs/TP6/archivos/ej6/info_huespedes.txt"
     ruta_pisos = "AyED1-2025-TPs/TP6/archivos/ej6/info_pisos.txt"
+    inicializar_archivo(ruta_hotel, ruta_pisos)
+    
     opciones_hotel = (
         "Salir del programa",
         "Registrar ingresos", 
