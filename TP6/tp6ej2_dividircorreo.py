@@ -28,22 +28,19 @@ def dividir_archivo(archivo_ruta: str, max_caract: int) -> None:
     titulo_archivo = archivo_ruta.split("/")[-1][:-4]
     contador_caract = 0
     num_archivo = 1
+    ruta_a_mandar = f"AyED1-2025-TPs/TP6/archivos/ej2/{titulo_archivo}{str(num_archivo)}.txt"
     try:
         with open(archivo_ruta, 'rt', encoding='utf-8-sig') as archivo:
-            ruta_a_mandar = f"AyED1-2025-TPs/TP6/archivos/ej2/{titulo_archivo}{str(num_archivo)}.txt"
             for linea in archivo:
-                i_principio = 0
-                for i_fin in range(len(linea)):
+                for caracter in linea:
                     contador_caract += 1
                     if contador_caract >= max_caract:
-                        guardar_texto(linea[i_principio:i_fin], ruta_a_mandar)
-                        num_archivo += 1
                         contador_caract = 0
-                        i_principio = i_fin
+                        num_archivo += 1
                         ruta_a_mandar = f"AyED1-2025-TPs/TP6/archivos/ej2/{titulo_archivo}{str(num_archivo)}.txt"
-                    
-                guardar_texto(f"{linea[i_principio:i_fin]}\n", ruta_a_mandar)
-    
+
+                    guardar_texto(caracter, ruta_a_mandar)
+
     except FileNotFoundError as msg:
         print(f"No se encuentra el archivo: {msg}")
     except OSError as msg:

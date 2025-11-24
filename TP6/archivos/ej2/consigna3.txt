@@ -1,4 +1,4 @@
 ﻿ctuar
 se después del delimitador del mismo. Mostrar un mensaje de error si el proceso no 
 pudiera llevarse a cabo. Recordar que no se permite cargar el archivo completo en 
-memoria
+memoria.
